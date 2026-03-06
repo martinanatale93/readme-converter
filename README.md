@@ -5,18 +5,19 @@ Convert boring `README.md` files into beautiful, self-contained static web pages
 <p align="center">
   <a href="https://martinanatale93.github.io/readme-converter/">📄 Live Demo</a> ·
   <a href="https://martinanatale93.github.io/readme-converter/playground.html">🛝 Playground</a> ·
-  <a href="https://www.npmjs.com/package/readme-converter">npm</a>
+  <a href="https://www.npmjs.com/package/readme-converter">npm</a> ·
+  <a href="https://buymeacoffee.com/martinanatale">☕ Buy Me a Coffee</a>
 </p>
 
 ## Demo
 
-**Before** — a plain `README.md` on GitHub:
+This README was converted into the page below using `readme-converter` itself:
 
-![Before — plain README on GitHub](https://via.placeholder.com/800x300/f6f8fa/1f2328?text=README.md+on+GitHub)
-
-**After** — a polished static page with hero, TOC, dark mode and syntax highlighting:
-
-![After — beautiful static page](https://via.placeholder.com/800x400/0d1117/e6edf3?text=readme-converter+output)
+<p align="center">
+  <a href="https://martinanatale93.github.io/readme-converter/">
+    <img src="assets/demo.png" alt="readme-converter demo — generated page" width="720" />
+  </a>
+</p>
 
 > **👉 [See it live](https://martinanatale93.github.io/readme-converter/)** — this page was generated from the very README you're reading now.
 >
@@ -226,6 +227,14 @@ readme-converter/
 ## Requirements
 
 - Node.js >= 18
+
+## Support
+
+If you find this tool useful, consider buying me a coffee:
+
+<a href="https://buymeacoffee.com/martinanatale">
+  <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-☕-orange?style=for-the-badge" alt="Buy Me a Coffee" />
+</a>
 
 ## License
 

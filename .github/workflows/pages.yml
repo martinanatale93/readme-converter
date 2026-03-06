@@ -1,0 +1,54 @@
+# ──────────────────────────────────────────────────────────
+# Deploy the readme-converter demo site to GitHub Pages.
+#
+# Converts the project's own README into a static page,
+# adds the live playground, and deploys to Pages.
+# ──────────────────────────────────────────────────────────
+
+name: Deploy Demo Site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Generate demo page
+        run: node bin/cli.js README.md -o public/index.html
+
+      - name: Copy playground
+        run: cp playground.html public/playground.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

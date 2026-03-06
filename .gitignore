@@ -1,5 +1,6 @@
 node_modules/
 index.html
+public/
 dist/
 *.tgz
 .DS_Store

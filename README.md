@@ -2,6 +2,26 @@
 
 Convert boring `README.md` files into beautiful, self-contained static web pages.
 
+<p align="center">
+  <a href="https://martinanatale93.github.io/readme-converter/">📄 Live Demo</a> ·
+  <a href="https://martinanatale93.github.io/readme-converter/playground.html">🛝 Playground</a> ·
+  <a href="https://www.npmjs.com/package/readme-converter">npm</a>
+</p>
+
+## Demo
+
+**Before** — a plain `README.md` on GitHub:
+
+![Before — plain README on GitHub](https://via.placeholder.com/800x300/f6f8fa/1f2328?text=README.md+on+GitHub)
+
+**After** — a polished static page with hero, TOC, dark mode and syntax highlighting:
+
+![After — beautiful static page](https://via.placeholder.com/800x400/0d1117/e6edf3?text=readme-converter+output)
+
+> **👉 [See it live](https://martinanatale93.github.io/readme-converter/)** — this page was generated from the very README you're reading now.
+>
+> **👉 [Try the Playground](https://martinanatale93.github.io/readme-converter/playground.html)** — paste any Markdown and preview the result instantly.
+
 ## Features
 
 - **Zero-config** — one command, one polished page

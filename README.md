@@ -106,6 +106,8 @@ injectBadgeInFile('./README.md', 'https://mysite.github.io/my-repo');
 Copy the example workflow into any repo at `.github/workflows/readme-page.yml`.
 A ready-to-use template is also available at [`examples/readme-page.yml`](examples/readme-page.yml).
 
+> **Prerequisites:** In your repository, go to **Settings → Pages → Source** and select **GitHub Actions**. The workflow will fail to deploy if Pages is still set to "Deploy from a branch" or is disabled.
+
 ```yaml
 name: README Page
 
@@ -126,7 +128,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: martinanatale/readme-converter@v1
+      - uses: martinanatale93/readme-converter@main
         with:
           file: README.md
           output: public/index.html
@@ -168,7 +170,7 @@ jobs:
 The action works from **any** repo as long as `readme-converter` is public. Your work org repos can reference your personal account:
 
 ```yaml
-- uses: martinanatale/readme-converter@v1
+- uses: martinanatale93/readme-converter@main
 ```
 
 ### Versioning

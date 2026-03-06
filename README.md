@@ -5,7 +5,6 @@ Convert boring `README.md` files into beautiful, self-contained static web pages
 <p align="center">
   <a href="https://martinanatale93.github.io/readme-converter/">📄 Live Demo</a> ·
   <a href="https://martinanatale93.github.io/readme-converter/playground.html">🛝 Playground</a> ·
-  <a href="https://www.npmjs.com/package/readme-converter">npm</a> ·
   <a href="https://buymeacoffee.com/martinanatale">☕ Buy Me a Coffee</a>
 </p>
 

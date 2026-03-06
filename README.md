@@ -237,4 +237,6 @@ If you find this tool useful, consider buying me a coffee:
 
 ## License
 
-MIT
+MIT — Created by [Martina Natale](https://github.com/martinanatale93).
+
+This project is free and open source. If you find it useful, consider [buying me a coffee](https://buymeacoffee.com/martinanatale).

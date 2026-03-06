@@ -1,0 +1,5 @@
+node_modules/
+index.html
+dist/
+*.tgz
+.DS_Store

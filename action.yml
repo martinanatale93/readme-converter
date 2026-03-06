@@ -1,0 +1,113 @@
+name: 'README Converter'
+description: 'Convert a README.md into a beautiful static HTML page'
+author: 'readme-converter'
+
+inputs:
+  file:
+    description: 'Path to the markdown file (default: README.md)'
+    required: false
+    default: 'README.md'
+  output:
+    description: 'Output HTML file path'
+    required: false
+    default: 'index.html'
+  accent:
+    description: 'Accent colour (hex)'
+    required: false
+    default: '#2563eb'
+  toc:
+    description: 'Include table of contents (true/false)'
+    required: false
+    default: 'true'
+  dark-mode:
+    description: 'Include dark mode toggle (true/false)'
+    required: false
+    default: 'true'
+  toc-depth:
+    description: 'Max heading depth for TOC (1-6)'
+    required: false
+    default: '3'
+  inject-badge:
+    description: 'Inject a "View as Page" badge into the README (true/false)'
+    required: false
+    default: 'true'
+  page-url:
+    description: 'Custom page URL for the badge (auto-detected from GitHub Pages if omitted)'
+    required: false
+    default: ''
+  skip-if-unchanged:
+    description: 'Skip conversion if the README was not modified in this push (true/false)'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check if README changed
+      id: check
+      if: ${{ inputs.skip-if-unchanged == 'true' }}
+      shell: bash
+      run: |
+        CHANGED=$(git diff --name-only HEAD~1 HEAD -- "${{ inputs.file }}" 2>/dev/null || echo "${{ inputs.file }}")
+        if [ -z "$CHANGED" ]; then
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+          echo "ℹ ${{ inputs.file }} not modified — skipping conversion"
+        else
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Setup Node.js
+      if: ${{ steps.check.outputs.skip != 'true' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      if: ${{ steps.check.outputs.skip != 'true' }}
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci --production
+
+    - name: Convert README
+      if: ${{ steps.check.outputs.skip != 'true' }}
+      shell: bash
+      run: |
+        ARGS="${{ inputs.file }}"
+        ARGS="$ARGS -o ${{ inputs.output }}"
+        ARGS="$ARGS --accent ${{ inputs.accent }}"
+        ARGS="$ARGS --toc-depth ${{ inputs.toc-depth }}"
+
+        if [ "${{ inputs.toc }}" = "false" ]; then
+          ARGS="$ARGS --no-toc"
+        fi
+
+        if [ "${{ inputs.dark-mode }}" = "false" ]; then
+          ARGS="$ARGS --no-dark-mode"
+        fi
+
+        node ${{ github.action_path }}/bin/cli.js $ARGS
+
+    - name: Inject badge into README
+      if: ${{ steps.check.outputs.skip != 'true' && inputs.inject-badge == 'true' }}
+      shell: bash
+      run: |
+        PAGE_URL="${{ inputs.page-url }}"
+        if [ -z "$PAGE_URL" ]; then
+          OWNER="${{ github.repository_owner }}"
+          REPO="$(echo '${{ github.repository }}' | cut -d/ -f2)"
+          PAGE_URL="https://${OWNER}.github.io/${REPO}"
+        fi
+
+        node ${{ github.action_path }}/bin/cli.js ${{ inputs.file }} \
+          -o ${{ inputs.output }} \
+          --inject-badge "$PAGE_URL"
+
+    - name: Commit badge update
+      if: ${{ steps.check.outputs.skip != 'true' && inputs.inject-badge == 'true' }}
+      shell: bash
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add ${{ inputs.file }}
+        git diff --cached --quiet || git commit -m "docs: add View as Page badge [skip ci]"
+        git push || true

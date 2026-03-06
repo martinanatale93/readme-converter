@@ -1,0 +1,32 @@
+{
+  "name": "readme-converter",
+  "version": "1.0.0",
+  "description": "Convert README.md files into beautiful static web pages",
+  "main": "src/index.js",
+  "bin": {
+    "readme-converter": "./bin/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node bin/cli.js",
+    "test": "node --test src/**/*.test.js"
+  },
+  "keywords": [
+    "readme",
+    "markdown",
+    "html",
+    "static-site",
+    "converter",
+    "github"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "highlight.js": "^11.10.0",
+    "marked": "^14.1.0",
+    "marked-highlight": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,56 @@
+# ──────────────────────────────────────────────────────────
+# README → Pretty Page  (copy this into any repo)
+#
+# Only runs when README.md is modified on the default branch.
+# Converts the README into a static page and deploys it
+# to GitHub Pages, then injects a "View as Page" badge
+# back into the README.
+# ──────────────────────────────────────────────────────────
+
+name: README Page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: readme-page
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: martinanatale/readme-converter@v1
+        with:
+          file: README.md
+          output: public/index.html
+          skip-if-unchanged: 'true'
+          # accent: '#2563eb'
+          # toc: 'true'
+          # dark-mode: 'true'
+          # inject-badge: 'true'
+          # page-url: ''            # auto-detected if empty
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

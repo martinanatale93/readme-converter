@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: martinanatale93/readme-converter@main
+      - uses: martinanatale93/readme-converter@v1
         with:
           file: README.md
           output: public/index.html

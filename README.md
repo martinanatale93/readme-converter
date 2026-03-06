@@ -149,7 +149,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: martinanatale93/readme-converter@main
+      - uses: martinanatale93/readme-converter@v1
         with:
           file: README.md
           output: public/index.html
@@ -191,7 +191,7 @@ jobs:
 The action works from **any** repo as long as `readme-converter` is public. Your work org repos can reference your personal account:
 
 ```yaml
-- uses: martinanatale93/readme-converter@main
+- uses: martinanatale93/readme-converter@v1
 ```
 
 ### Versioning
